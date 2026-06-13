@@ -1,0 +1,36 @@
+services:
+  database:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: quiet_room
+      POSTGRES_USER: quietroom
+      POSTGRES_PASSWORD: quietroom
+    ports:
+      - "5432:5432"
+    volumes:
+      - quietroom_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U quietroom -d quiet_room
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg2://quietroom:quietroom@database:5432/quiet_room
+      SECRET_KEY: ${QUIET_ROOM_SECRET_KEY:-development-only-secret-key-change-this}
+      ACCESS_TOKEN_EXPIRE_MINUTES: 1440
+      AUTO_CREATE_TABLES: "true"
+    ports:
+      - "8000:8000"
+    depends_on:
+      database:
+        condition: service_healthy
+
+volumes:
+  quietroom_postgres:
+
