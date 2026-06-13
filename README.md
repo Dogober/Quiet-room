@@ -1,11 +1,10 @@
 # QuietRoom
 
-QuietRoom состоит из Android-клиента на Kotlin/Jetpack Compose и API на
-FastAPI/PostgreSQL.
+QuietRoom consists of an Android client built with Kotlin/Jetpack Compose and a FastAPI/PostgreSQL backend.
 
 ## Backend
 
-Из папки `backend`:
+From the `backend` directory:
 
 ```powershell
 py -3.14 -m venv .venv
@@ -16,17 +15,16 @@ pytest
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-В `.env` нужно задать собственные `DATABASE_URL` и случайный `SECRET_KEY`
-длиной не менее 32 символов. Локальный `.env` не попадает в git.
+In the `.env` file, configure your own `DATABASE_URL` and a random `SECRET_KEY` that is at least 32 characters long. The local `.env` file is excluded from version control and is not committed to Git.
 
-Проверка API:
+API health checks:
 
 ```text
 http://localhost:8000/docs
 http://localhost:8000/health
 ```
 
-Альтернативный запуск backend и PostgreSQL:
+Alternative way to start the backend and PostgreSQL:
 
 ```powershell
 docker compose up --build
@@ -34,18 +32,18 @@ docker compose up --build
 
 ## Android
 
-По умолчанию debug-сборка обращается к `192.168.0.100:8000`. Адрес можно
-переопределить в пользовательском `gradle.properties`:
+By default, the debug build connects to `192.168.0.100:8000`. You can override the address in your user-specific `gradle.properties` file:
 
 ```properties
 QUIET_ROOM_API_URL=http://192.168.0.100:8000/
 QUIET_ROOM_WS_URL=ws://192.168.0.100:8000/ws
 ```
 
-Для Android Emulator вместо IP компьютера обычно используется `10.0.2.2`.
-Физический телефон и компьютер должны находиться в одной сети.
+When using the Android Emulator, you should typically use `10.0.2.2` instead of your computer's IP address.
 
-Проверки:
+For testing on a physical device, both the Android device and the computer must be connected to the same local network.
+
+Verification commands:
 
 ```powershell
 $env:JAVA_HOME='C:\Program Files\Android\Android Studio\jbr'
@@ -53,5 +51,9 @@ $env:JAVA_HOME='C:\Program Files\Android\Android Studio\jbr'
 .\gradlew.bat assembleDebug
 ```
 
-Production-конфигурация должна использовать только `https://` и `wss://`.
+Production configurations must use only secure protocols:
 
+```text
+https://
+wss://
+```
