@@ -6,7 +6,11 @@ from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 
 from app.database import Base
-from app.models.message import MessageModel
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.models.message import MessageModel
+
 
 class UserModel(Base):
 

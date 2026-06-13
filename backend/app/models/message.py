@@ -11,7 +11,10 @@ from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 
 from app.database import Base
-from app.models.user import UserModel
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.models.user import UserModel
 
 
 class MessageModel(Base):
