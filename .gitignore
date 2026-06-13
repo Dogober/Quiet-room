@@ -1,0 +1,15 @@
+.idea/
+*.iml
+
+**/.gradle/
+**/.kotlin/
+**/.codex-tools/
+**/build/
+**/local.properties
+
+**/.env
+**/venv/
+**/.venv/
+**/__pycache__/
+**/*.py[cod]
+.pytest_cache/
