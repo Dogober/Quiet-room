@@ -4,10 +4,10 @@ plugins {
 }
 
 val apiBaseUrl = providers.gradleProperty("QUIET_ROOM_API_URL")
-    .orElse("http://192.168.0.101:8000/")
+    .orElse("https://quiet-room-production.up.railway.app/")
     .get()
 val webSocketUrl = providers.gradleProperty("QUIET_ROOM_WS_URL")
-    .orElse("ws://192.168.0.101:8000/ws")
+    .orElse("wss://quiet-room-production.up.railway.app/ws")
     .get()
 
 android {
